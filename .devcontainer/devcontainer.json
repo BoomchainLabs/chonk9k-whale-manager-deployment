@@ -1,22 +1,7 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
 {
-  "name": "Chonkpump Manager DevContainer",
-  "image": "boomchaindock/chonkpump-manager:latest",
-  "postCreateCommand": "npm install",
-  "customizations": {
-    "vscode": {
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
-      },
-      "extensions": [
-        "dbaeumer.vscode-eslint",
-        "ms-azuretools.vscode-docker",
-        "ms-kubernetes-tools.vscode-kubernetes-tools"
-      ]
-    }
-  },
-  "forwardPorts": [3000],
-  "mounts": [
-    "source=${localWorkspaceFolder}/src,target=/usr/src/app/src,type=bind"
-  ],
-  "remoteUser": "root"
+  "name": "Development",
+  "image": "mcr.microsoft.com/devcontainers/go:1.23-bookworm",
+  "postCreateCommand": "go mod tidy"
 }
