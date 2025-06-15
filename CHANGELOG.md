@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.0.1-alpha.1 (2025-06-15)
+
+Full Changelog: [v0.0.1-alpha.0...v0.0.1-alpha.1](https://github.com/BoomchainLabs/chonk9k-whale-manager-deployment/compare/v0.0.1-alpha.0...v0.0.1-alpha.1)
+
+### Chores
+
+* sync repo ([c903cfc](https://github.com/BoomchainLabs/chonk9k-whale-manager-deployment/commit/c903cfcbb882ed483e6a6439f060b709ad64539c))
+* update SDK settings ([70c8cb8](https://github.com/BoomchainLabs/chonk9k-whale-manager-deployment/commit/70c8cb80d62d347de04479989c912492a956d3c6))
+
 ## 0.1.0-alpha.1 (2025-06-15)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/BoomchainLabs/release-please/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
