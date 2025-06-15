@@ -3,7 +3,7 @@ package param
 import (
 	"encoding/json"
 	"fmt"
-	shimjson "github.com/BoomchainLabs/release-please/internal/encoding/json"
+	shimjson "github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/encoding/json"
 	"time"
 )
 

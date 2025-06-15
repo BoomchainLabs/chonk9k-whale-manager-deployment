@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/BoomchainLabs/release-please"
-	"github.com/BoomchainLabs/release-please/internal/testutil"
-	"github.com/BoomchainLabs/release-please/option"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/testutil"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/option"
 )
 
 func TestStatGet(t *testing.T) {

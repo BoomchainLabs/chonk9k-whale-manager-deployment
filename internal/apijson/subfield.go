@@ -1,7 +1,7 @@
 package apijson
 
 import (
-	"github.com/BoomchainLabs/release-please/packages/respjson"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/packages/respjson"
 	"reflect"
 )
 

@@ -41,7 +41,7 @@ To use a local version of this library from source in another project, edit the 
 directive. This can be done through the CLI with the following:
 
 ```sh
-$ go mod edit -replace github.com/BoomchainLabs/release-please=/path/to/release-please
+$ go mod edit -replace github.com/BoomchainLabs/chonk9k-whale-manager-deployment=/path/to/chonk9k-whale-manager-deployment
 ```
 
 ## Running tests

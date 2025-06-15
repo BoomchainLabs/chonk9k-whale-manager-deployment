@@ -9,11 +9,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/BoomchainLabs/release-please/internal/apijson"
-	"github.com/BoomchainLabs/release-please/internal/requestconfig"
-	"github.com/BoomchainLabs/release-please/option"
-	"github.com/BoomchainLabs/release-please/packages/param"
-	"github.com/BoomchainLabs/release-please/packages/respjson"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/apijson"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/requestconfig"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/option"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/packages/param"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/packages/respjson"
 )
 
 // UserService contains methods and other services that help with interacting with

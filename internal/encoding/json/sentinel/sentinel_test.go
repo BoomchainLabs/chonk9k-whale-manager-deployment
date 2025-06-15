@@ -1,7 +1,7 @@
 package sentinel_test
 
 import (
-	"github.com/BoomchainLabs/release-please/internal/encoding/json/sentinel"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/encoding/json/sentinel"
 	"reflect"
 	"slices"
 	"testing"

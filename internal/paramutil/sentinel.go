@@ -1,7 +1,7 @@
 package paramutil
 
 import (
-	"github.com/BoomchainLabs/release-please/internal/encoding/json/sentinel"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/encoding/json/sentinel"
 )
 
 // NullPtr returns a pointer to the zero value of the type T.
