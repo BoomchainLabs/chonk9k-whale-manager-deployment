@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/BoomchainLabs/release-please/packages/param"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/packages/param"
 )
 
 var encoders sync.Map // map[encoderEntry]encoderFunc

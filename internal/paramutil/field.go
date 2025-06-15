@@ -1,8 +1,8 @@
 package paramutil
 
 import (
-	"github.com/BoomchainLabs/release-please/packages/param"
-	"github.com/BoomchainLabs/release-please/packages/respjson"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/packages/param"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/packages/respjson"
 )
 
 func AddrIfPresent[T comparable](v param.Opt[T]) *T {

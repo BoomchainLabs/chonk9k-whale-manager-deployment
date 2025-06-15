@@ -1,6 +1,6 @@
 # Earn App Go API Library
 
-<a href="https://pkg.go.dev/github.com/BoomchainLabs/release-please"><img src="https://pkg.go.dev/badge/github.com/BoomchainLabs/release-please.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/BoomchainLabs/chonk9k-whale-manager-deployment"><img src="https://pkg.go.dev/badge/github.com/BoomchainLabs/chonk9k-whale-manager-deployment.svg" alt="Go Reference"></a>
 
 The Earn App Go library provides convenient access to the [Earn App REST API](https://lerfhub.xyz)
 from applications written in Go.
@@ -13,7 +13,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ```go
 import (
-	"github.com/BoomchainLabs/release-please" // imported as earnapp
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment" // imported as earnapp
 )
 ```
 
@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/BoomchainLabs/release-please@v0.1.0-alpha.1'
+go get -u 'github.com/BoomchainLabs/chonk9k-whale-manager-deployment@v0.0.1-alpha.0'
 ```
 
 <!-- x-release-please-end -->
@@ -44,8 +44,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/BoomchainLabs/release-please"
-	"github.com/BoomchainLabs/release-please/option"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/option"
 )
 
 func main() {
@@ -273,7 +273,7 @@ client.Users.New(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/BoomchainLabs/release-please/option).
+See the [full list of request options](https://pkg.go.dev/github.com/BoomchainLabs/chonk9k-whale-manager-deployment/option).
 
 ### Pagination
 
@@ -487,7 +487,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/BoomchainLabs/release-please/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/BoomchainLabs/chonk9k-whale-manager-deployment/issues) with questions, bugs, or suggestions.
 
 ## Contributing
 

@@ -2,7 +2,7 @@
 package json
 
 import (
-	"github.com/BoomchainLabs/release-please/internal/encoding/json/shims"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/encoding/json/shims"
 	"reflect"
 	"time"
 )

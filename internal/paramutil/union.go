@@ -2,7 +2,7 @@ package paramutil
 
 import (
 	"fmt"
-	"github.com/BoomchainLabs/release-please/packages/param"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/packages/param"
 	"reflect"
 )
 

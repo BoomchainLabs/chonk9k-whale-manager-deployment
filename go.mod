@@ -1,4 +1,4 @@
-module github.com/BoomchainLabs/release-please
+module github.com/BoomchainLabs/chonk9k-whale-manager-deployment
 
 go 1.21
 

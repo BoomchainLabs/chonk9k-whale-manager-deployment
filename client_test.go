@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/BoomchainLabs/release-please"
-	"github.com/BoomchainLabs/release-please/internal"
-	"github.com/BoomchainLabs/release-please/option"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/option"
 )
 
 type closureTransport struct {

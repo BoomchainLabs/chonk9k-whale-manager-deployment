@@ -3,8 +3,8 @@ package respjson_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/BoomchainLabs/release-please/internal/apijson"
-	rj "github.com/BoomchainLabs/release-please/packages/respjson"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/apijson"
+	rj "github.com/BoomchainLabs/chonk9k-whale-manager-deployment/packages/respjson"
 	"reflect"
 	"testing"
 )

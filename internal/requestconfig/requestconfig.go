@@ -18,10 +18,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/BoomchainLabs/release-please/internal"
-	"github.com/BoomchainLabs/release-please/internal/apierror"
-	"github.com/BoomchainLabs/release-please/internal/apiform"
-	"github.com/BoomchainLabs/release-please/internal/apiquery"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/apierror"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/apiform"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/apiquery"
 )
 
 func getDefaultHeaders() map[string]string {

@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/BoomchainLabs/release-please/internal/apijson"
-	"github.com/BoomchainLabs/release-please/packages/respjson"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/apijson"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/packages/respjson"
 )
 
 // Error represents an error that originates from the API, i.e. when a request is

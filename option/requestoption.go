@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/BoomchainLabs/release-please/internal/requestconfig"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/requestconfig"
 	"github.com/tidwall/sjson"
 )
 
@@ -19,7 +19,7 @@ import (
 // which can be supplied to clients, services, and methods. You can read more about this functional
 // options pattern in our [README].
 //
-// [README]: https://pkg.go.dev/github.com/BoomchainLabs/release-please#readme-requestoptions
+// [README]: https://pkg.go.dev/github.com/BoomchainLabs/chonk9k-whale-manager-deployment#readme-requestoptions
 type RequestOption = requestconfig.RequestOption
 
 // WithBaseURL returns a RequestOption that sets the BaseURL for the client.

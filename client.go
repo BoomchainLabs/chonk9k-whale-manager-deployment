@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/BoomchainLabs/release-please/internal/requestconfig"
-	"github.com/BoomchainLabs/release-please/option"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/requestconfig"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/option"
 )
 
 // Client creates a struct with services and top level methods that help with

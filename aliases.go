@@ -3,8 +3,8 @@
 package earnapp
 
 import (
-	"github.com/BoomchainLabs/release-please/internal/apierror"
-	"github.com/BoomchainLabs/release-please/packages/param"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/internal/apierror"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/packages/param"
 )
 
 // aliased to make [param.APIUnion] private when embedding
