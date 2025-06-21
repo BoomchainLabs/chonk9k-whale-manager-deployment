@@ -1,96 +1,494 @@
-# chonk9k-whale-manager-deployment
-Automated deployment pipeline for $CHONK9K Whale Manager. Integrates Docker, Helm, Kubernetes, and CI/CD pipelines for seamless scaling and zero-downtime updates of whale monitoring services on Solana. Includes optimized Helm charts, rolling updates, and automated deployment strategies.
+# Earn App Go API Library
 
-Overview
+<a href="https://pkg.go.dev/github.com/BoomchainLabs/chonk9k-whale-manager-deployment"><img src="https://pkg.go.dev/badge/github.com/BoomchainLabs/chonk9k-whale-manager-deployment.svg" alt="Go Reference"></a>
 
-The $CHONK9K Whale Manager is responsible for monitoring large wallet holders (whales) within the $CHONK9K token ecosystem. This system ensures that whale activity is tracked and alerts are triggered when necessary. The deployment leverages Kubernetes and Helm for efficient scaling, maintenance, and updates.
+The Earn App Go library provides convenient access to the [Earn App REST API](https://lerfhub.xyz)
+from applications written in Go.
 
-Features
-	•	Dockerized Application: Containerized app for scalable deployment.
-	•	Helm Chart: Helm templates to manage the Kubernetes resources.
-	•	Zero-Downtime Deployments: Rolling updates using Kubernetes to ensure uninterrupted service during updates.
-	•	CI/CD Pipeline Integration: Automated deployment using GitHub Actions to manage deployments seamlessly.
+It is generated with [Stainless](https://www.stainless.com/).
 
-Getting Started
+## Installation
 
-Prerequisites
-	•	Kubernetes Cluster: A running Kubernetes cluster (local or cloud-based like AWS EKS, Google GKE, etc.).
-	•	Helm 3: Install Helm for managing Kubernetes applications.
-	•	Docker: Install Docker to build and push the container image.
-	•	GitHub Account: For managing and updating the repository.
+<!-- x-release-please-start-version -->
 
-Setup
-	1.	Clone this repository:
+```go
+import (
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment" // imported as earnapp
+)
+```
 
- git clone https://github.com/Boomchainlab/chonk9k-whale-manager-deployment.git
-cd chonk9k-whale-manager-deployment
+<!-- x-release-please-end -->
 
-	2.	Update the values.yaml file to configure environment variables such as:
-	•	RPC_URL: URL for Solana RPC service.
-	•	MINT_ADDRESS: The mint address of the $CHONK9K token.
-	•	WHALE_THRESHOLD: The whale balance threshold to trigger alerts.
-	•	ALERT_WEBHOOK_URL: Webhook URL for receiving whale alerts.
-	•	NEW_UPDATE_AUTHORITY: The new update authority for the $CHONK9K token.
-	•	PAYER_KEYPAIR_PATH: Path to the payer's keypair file.
-	3.	Build and push the Docker image:
+Or to pin the version:
 
- docker build -t chonkpump-manager/chonkpump-manager:latest .
-docker push your-docker-repository/chonkpump-manager:latest
+<!-- x-release-please-start-version -->
 
-	4.	Install the application with Helm:
+```sh
+go get -u 'github.com/BoomchainLabs/chonk9k-whale-manager-deployment@v0.0.1-alpha.1'
+```
 
- helm install chonkpump-manager ./chonkpump-manager
+<!-- x-release-please-end -->
 
-	5.	Remember to update the .env file with your specific values for the environment variables.
+## Requirements
 
-	6.	Verify the Docker image after pushing it:
+This library requires Go 1.18+.
 
-		* Pull the Docker image:
-		```sh
-		docker pull chonkpump-manager/chonkpump-manager:latest
-		```
-		Replace `chonkpump-manager` with the actual name of your Docker repository.
+## Usage
 
-		* Run the Docker container:
-		```sh
-		docker run -d --name chonkpump-manager chonkpump-manager/chonkpump-manager:latest
-		```
-		This will start a container named `chonkpump-manager` in detached mode.
+The full API of this library can be found in [api.md](api.md).
 
-		* Check container logs:
-		```sh
-		docker logs chonkpump-manager
-		```
+```go
+package main
 
-		* Clean up:
-		```sh
-		docker stop chonkpump-manager
-		docker rm chonkpump-manager
-		```
+import (
+	"context"
+	"fmt"
 
- CI/CD Pipeline
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment"
+	"github.com/BoomchainLabs/chonk9k-whale-manager-deployment/option"
+)
 
-This repository is configured to automatically deploy updates when changes are pushed to the main branch. The pipeline includes:
-	•	Linting
-	•	Testing
-	•	Docker Build & Push
-	•	Helm Upgrade (Rolling Updates)
+func main() {
+	client := earnapp.NewClient(
+		option.WithAPIKey("My API Key"),      // defaults to os.LookupEnv("EARN_APP_API_KEY")
+		option.WithEnvironmentEnvironment1(), // defaults to option.WithEnvironmentProduction()
+	)
+	user, err := client.Users.New(context.TODO(), earnapp.UserNewParams{
+		WalletAddress: "walletAddress",
+	})
+	if err != nil {
+		panic(err.Error())
+	}
+	fmt.Printf("%+v\n", user.ID)
+}
 
-The CI/CD configuration is contained in .github/workflows/ci-cd.yaml.
-Deployment Strategy
+```
 
-The deployment uses the RollingUpdate strategy for zero-downtime updates:
-strategy:
-  type: RollingUpdate
-  rollingUpdate:
-    maxSurge: 1
-    maxUnavailable: 0
-    This ensures that during upgrades, the new version is rolled out one pod at a time, with no downtime and no loss of service.
+### Request fields
 
-Monitoring and Alerts
+The earnapp library uses the [`omitzero`](https://tip.golang.org/doc/go1.24#encodingjsonpkgencodingjson)
+semantics from the Go 1.24+ `encoding/json` release for request fields.
 
-The whale manager monitors wallets holding large amounts of $CHONK9K and triggers alerts when the set threshold is exceeded. The alerts are sent to the configured webhook URL for further action.
+Required primitive fields (`int64`, `string`, etc.) feature the tag <code>\`json:"...,required"\`</code>. These
+fields are always serialized, even their zero values.
 
-License
+Optional primitive types are wrapped in a `param.Opt[T]`. These fields can be set with the provided constructors, `earnapp.String(string)`, `earnapp.Int(int64)`, etc.
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Any `param.Opt[T]`, map, slice, struct or string enum uses the
+tag <code>\`json:"...,omitzero"\`</code>. Its zero value is considered omitted.
+
+The `param.IsOmitted(any)` function can confirm the presence of any `omitzero` field.
+
+```go
+p := earnapp.ExampleParams{
+	ID:   "id_xxx",              // required property
+	Name: earnapp.String("..."), // optional property
+
+	Point: earnapp.Point{
+		X: 0,              // required field will serialize as 0
+		Y: earnapp.Int(1), // optional field will serialize as 1
+		// ... omitted non-required fields will not be serialized
+	},
+
+	Origin: earnapp.Origin{}, // the zero value of [Origin] is considered omitted
+}
+```
+
+To send `null` instead of a `param.Opt[T]`, use `param.Null[T]()`.
+To send `null` instead of a struct `T`, use `param.NullStruct[T]()`.
+
+```go
+p.Name = param.Null[string]()       // 'null' instead of string
+p.Point = param.NullStruct[Point]() // 'null' instead of struct
+
+param.IsNull(p.Name)  // true
+param.IsNull(p.Point) // true
+```
+
+Request structs contain a `.SetExtraFields(map[string]any)` method which can send non-conforming
+fields in the request body. Extra fields overwrite any struct fields with a matching
+key. For security reasons, only use `SetExtraFields` with trusted data.
+
+To send a custom value instead of a struct, use `param.Override[T](value)`.
+
+```go
+// In cases where the API specifies a given type,
+// but you want to send something else, use [SetExtraFields]:
+p.SetExtraFields(map[string]any{
+	"x": 0.01, // send "x" as a float instead of int
+})
+
+// Send a number instead of an object
+custom := param.Override[earnapp.FooParams](12)
+```
+
+### Request unions
+
+Unions are represented as a struct with fields prefixed by "Of" for each of it's variants,
+only one field can be non-zero. The non-zero field will be serialized.
+
+Sub-properties of the union can be accessed via methods on the union struct.
+These methods return a mutable pointer to the underlying data, if present.
+
+```go
+// Only one field can be non-zero, use param.IsOmitted() to check if a field is set
+type AnimalUnionParam struct {
+	OfCat *Cat `json:",omitzero,inline`
+	OfDog *Dog `json:",omitzero,inline`
+}
+
+animal := AnimalUnionParam{
+	OfCat: &Cat{
+		Name: "Whiskers",
+		Owner: PersonParam{
+			Address: AddressParam{Street: "3333 Coyote Hill Rd", Zip: 0},
+		},
+	},
+}
+
+// Mutating a field
+if address := animal.GetOwner().GetAddress(); address != nil {
+	address.ZipCode = 94304
+}
+```
+
+### Response objects
+
+All fields in response structs are ordinary value types (not pointers or wrappers).
+Response structs also include a special `JSON` field containing metadata about
+each property.
+
+```go
+type Animal struct {
+	Name   string `json:"name,nullable"`
+	Owners int    `json:"owners"`
+	Age    int    `json:"age"`
+	JSON   struct {
+		Name        respjson.Field
+		Owner       respjson.Field
+		Age         respjson.Field
+		ExtraFields map[string]respjson.Field
+	} `json:"-"`
+}
+```
+
+To handle optional data, use the `.Valid()` method on the JSON field.
+`.Valid()` returns true if a field is not `null`, not present, or couldn't be marshaled.
+
+If `.Valid()` is false, the corresponding field will simply be its zero value.
+
+```go
+raw := `{"owners": 1, "name": null}`
+
+var res Animal
+json.Unmarshal([]byte(raw), &res)
+
+// Accessing regular fields
+
+res.Owners // 1
+res.Name   // ""
+res.Age    // 0
+
+// Optional field checks
+
+res.JSON.Owners.Valid() // true
+res.JSON.Name.Valid()   // false
+res.JSON.Age.Valid()    // false
+
+// Raw JSON values
+
+res.JSON.Owners.Raw()                  // "1"
+res.JSON.Name.Raw() == "null"          // true
+res.JSON.Name.Raw() == respjson.Null   // true
+res.JSON.Age.Raw() == ""               // true
+res.JSON.Age.Raw() == respjson.Omitted // true
+```
+
+These `.JSON` structs also include an `ExtraFields` map containing
+any properties in the json response that were not specified
+in the struct. This can be useful for API features not yet
+present in the SDK.
+
+```go
+body := res.JSON.ExtraFields["my_unexpected_field"].Raw()
+```
+
+### Response Unions
+
+In responses, unions are represented by a flattened struct containing all possible fields from each of the
+object variants.
+To convert it to a variant use the `.AsFooVariant()` method or the `.AsAny()` method if present.
+
+If a response value union contains primitive values, primitive fields will be alongside
+the properties but prefixed with `Of` and feature the tag `json:"...,inline"`.
+
+```go
+type AnimalUnion struct {
+	// From variants [Dog], [Cat]
+	Owner Person `json:"owner"`
+	// From variant [Dog]
+	DogBreed string `json:"dog_breed"`
+	// From variant [Cat]
+	CatBreed string `json:"cat_breed"`
+	// ...
+
+	JSON struct {
+		Owner respjson.Field
+		// ...
+	} `json:"-"`
+}
+
+// If animal variant
+if animal.Owner.Address.ZipCode == "" {
+	panic("missing zip code")
+}
+
+// Switch on the variant
+switch variant := animal.AsAny().(type) {
+case Dog:
+case Cat:
+default:
+	panic("unexpected type")
+}
+```
+
+### RequestOptions
+
+This library uses the functional options pattern. Functions defined in the
+`option` package return a `RequestOption`, which is a closure that mutates a
+`RequestConfig`. These options can be supplied to the client or at individual
+requests. For example:
+
+```go
+client := earnapp.NewClient(
+	// Adds a header to every request made by the client
+	option.WithHeader("X-Some-Header", "custom_header_info"),
+)
+
+client.Users.New(context.TODO(), ...,
+	// Override the header
+	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
+	// Add an undocumented field to the request body, using sjson syntax
+	option.WithJSONSet("some.json.path", map[string]string{"my": "object"}),
+)
+```
+
+See the [full list of request options](https://pkg.go.dev/github.com/BoomchainLabs/chonk9k-whale-manager-deployment/option).
+
+### Pagination
+
+This library provides some conveniences for working with paginated list endpoints.
+
+You can use `.ListAutoPaging()` methods to iterate through items across all pages:
+
+Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
+with additional helper methods like `.GetNextPage()`, e.g.:
+
+### Errors
+
+When the API returns a non-success status code, we return an error with type
+`*earnapp.Error`. This contains the `StatusCode`, `*http.Request`, and
+`*http.Response` values of the request, as well as the JSON of the error body
+(much like other response objects in the SDK).
+
+To handle errors, we recommend that you use the `errors.As` pattern:
+
+```go
+_, err := client.Users.New(context.TODO(), earnapp.UserNewParams{
+	WalletAddress: "walletAddress",
+})
+if err != nil {
+	var apierr *earnapp.Error
+	if errors.As(err, &apierr) {
+		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
+		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
+	}
+	panic(err.Error()) // GET "/users": 400 Bad Request { ... }
+}
+```
+
+When other errors occur, they are returned unwrapped; for example,
+if HTTP transport fails, you might receive `*url.Error` wrapping `*net.OpError`.
+
+### Timeouts
+
+Requests do not time out by default; use context to configure a timeout for a request lifecycle.
+
+Note that if a request is [retried](#retries), the context timeout does not start over.
+To set a per-retry timeout, use `option.WithRequestTimeout()`.
+
+```go
+// This sets the timeout for the request, including all the retries.
+ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+defer cancel()
+client.Users.New(
+	ctx,
+	earnapp.UserNewParams{
+		WalletAddress: "walletAddress",
+	},
+	// This sets the per-retry timeout
+	option.WithRequestTimeout(20*time.Second),
+)
+```
+
+### File uploads
+
+Request parameters that correspond to file uploads in multipart requests are typed as
+`io.Reader`. The contents of the `io.Reader` will by default be sent as a multipart form
+part with the file name of "anonymous_file" and content-type of "application/octet-stream".
+
+The file name and content-type can be customized by implementing `Name() string` or `ContentType()
+string` on the run-time type of `io.Reader`. Note that `os.File` implements `Name() string`, so a
+file returned by `os.Open` will be sent with the file name on disk.
+
+We also provide a helper `earnapp.File(reader io.Reader, filename string, contentType string)`
+which can be used to wrap any `io.Reader` with the appropriate file name and content type.
+
+### Retries
+
+Certain errors will be automatically retried 2 times by default, with a short exponential backoff.
+We retry by default all connection errors, 408 Request Timeout, 409 Conflict, 429 Rate Limit,
+and >=500 Internal errors.
+
+You can use the `WithMaxRetries` option to configure or disable this:
+
+```go
+// Configure the default for all requests:
+client := earnapp.NewClient(
+	option.WithMaxRetries(0), // default is 2
+)
+
+// Override per-request:
+client.Users.New(
+	context.TODO(),
+	earnapp.UserNewParams{
+		WalletAddress: "walletAddress",
+	},
+	option.WithMaxRetries(5),
+)
+```
+
+### Accessing raw response data (e.g. response headers)
+
+You can access the raw HTTP response data by using the `option.WithResponseInto()` request option. This is useful when
+you need to examine response headers, status codes, or other details.
+
+```go
+// Create a variable to store the HTTP response
+var response *http.Response
+user, err := client.Users.New(
+	context.TODO(),
+	earnapp.UserNewParams{
+		WalletAddress: "walletAddress",
+	},
+	option.WithResponseInto(&response),
+)
+if err != nil {
+	// handle error
+}
+fmt.Printf("%+v\n", user)
+
+fmt.Printf("Status Code: %d\n", response.StatusCode)
+fmt.Printf("Headers: %+#v\n", response.Header)
+```
+
+### Making custom/undocumented requests
+
+This library is typed for convenient access to the documented API. If you need to access undocumented
+endpoints, params, or response properties, the library can still be used.
+
+#### Undocumented endpoints
+
+To make requests to undocumented endpoints, you can use `client.Get`, `client.Post`, and other HTTP verbs.
+`RequestOptions` on the client, such as retries, will be respected when making these requests.
+
+```go
+var (
+    // params can be an io.Reader, a []byte, an encoding/json serializable object,
+    // or a "…Params" struct defined in this library.
+    params map[string]any
+
+    // result can be an []byte, *http.Response, a encoding/json deserializable object,
+    // or a model defined in this library.
+    result *http.Response
+)
+err := client.Post(context.Background(), "/unspecified", params, &result)
+if err != nil {
+    …
+}
+```
+
+#### Undocumented request params
+
+To make requests using undocumented parameters, you may use either the `option.WithQuerySet()`
+or the `option.WithJSONSet()` methods.
+
+```go
+params := FooNewParams{
+    ID:   "id_xxxx",
+    Data: FooNewParamsData{
+        FirstName: earnapp.String("John"),
+    },
+}
+client.Foo.New(context.Background(), params, option.WithJSONSet("data.last_name", "Doe"))
+```
+
+#### Undocumented response properties
+
+To access undocumented response properties, you may either access the raw JSON of the response as a string
+with `result.JSON.RawJSON()`, or get the raw JSON of a particular field on the result with
+`result.JSON.Foo.Raw()`.
+
+Any fields that are not present on the response struct will be saved and can be accessed by `result.JSON.ExtraFields()` which returns the extra fields as a `map[string]Field`.
+
+### Middleware
+
+We provide `option.WithMiddleware` which applies the given
+middleware to requests.
+
+```go
+func Logger(req *http.Request, next option.MiddlewareNext) (res *http.Response, err error) {
+	// Before the request
+	start := time.Now()
+	LogReq(req)
+
+	// Forward the request to the next handler
+	res, err = next(req)
+
+	// Handle stuff after the request
+	end := time.Now()
+	LogRes(res, err, start - end)
+
+    return res, err
+}
+
+client := earnapp.NewClient(
+	option.WithMiddleware(Logger),
+)
+```
+
+When multiple middlewares are provided as variadic arguments, the middlewares
+are applied left to right. If `option.WithMiddleware` is given
+multiple times, for example first in the client then the method, the
+middleware in the client will run first and the middleware given in the method
+will run next.
+
+You may also replace the default `http.Client` with
+`option.WithHTTPClient(client)`. Only one http client is
+accepted (this overwrites any previous client) and receives requests after any
+middleware has been applied.
+
+## Semantic versioning
+
+This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
+
+1. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_
+2. Changes that we do not expect to impact the vast majority of users in practice.
+
+We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
+
+We are keen for your feedback; please open an [issue](https://www.github.com/BoomchainLabs/chonk9k-whale-manager-deployment/issues) with questions, bugs, or suggestions.
+
+## Contributing
+
+See [the contributing documentation](./CONTRIBUTING.md).
